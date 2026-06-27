@@ -1,0 +1,6 @@
+{
+  "name": "Nifty 50 Index Dashboard",
+  "description": "An interactive Indian stock market tracking dashboard featuring live simulated price feeds for the Nifty 50 and other indices, historical charts, sector heatmaps, a paper trading simulator, and custom watchlist.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
