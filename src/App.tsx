@@ -11,7 +11,7 @@ import PopulationHealthPanel from './components/PopulationHealthPanel';
 import AlertsDrawer from './components/AlertsDrawer';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import { Toaster } from 'sonner';
-import { Activity, ShieldCheck, HeartPulse, User, Network } from 'lucide-react';
+import { Activity, ShieldCheck, HeartPulse, User, Network, Database, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -173,7 +173,7 @@ export default function App() {
                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20 text-xs font-sans font-bold transition-colors"
              >
                <Network className="w-4 h-4" />
-               View Agent Architecture
+               View Model Architecture
              </button>
              <span className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-400 font-sans font-semibold">
                <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -296,7 +296,7 @@ export default function App() {
 
       <AnimatePresence>
         {showWorkflow && (
-          <AgentWorkflowDialog onClose={() => setShowWorkflow(false)} />
+          <AgentWorkflowDialog key="agent-workflow-dialog" onClose={() => setShowWorkflow(false)} />
         )}
       </AnimatePresence>
     </div>

@@ -46,7 +46,7 @@ export class MedicalKnowledgeAgent {
 
     try {
       const response = await this.ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-1.5-pro',
         contents: prompt,
         config: {
           temperature: 0.2
@@ -91,7 +91,7 @@ export class MedicalKnowledgeAgent {
 
     try {
       const response = await this.ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-1.5-pro',
         contents: prompt,
         config: {
           temperature: 0.3

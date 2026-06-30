@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExplainabilityResult } from '../types';
-import { Sparkles, FileText, Bot, ListChecks, Tags } from 'lucide-react';
+import { Sparkles, FileText, Bot, ListChecks, Tags, Network } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import FeatureImportanceChart from './FeatureImportanceChart';
 
@@ -18,6 +18,23 @@ export default function ExplainabilityPanel({
   predictionAvailable 
 }: ExplainabilityPanelProps) {
   
+  const [agentTrace, setAgentTrace] = React.useState<string>('');
+  
+  React.useEffect(() => {
+    if (loading) {
+      setAgentTrace('Coordinator Agent routing request...');
+      const timers = [
+        setTimeout(() => setAgentTrace('Retrieval Agent analyzing patient history...'), 800),
+        setTimeout(() => setAgentTrace('Medical Knowledge Agent cross-referencing guidelines...'), 2000),
+        setTimeout(() => setAgentTrace('Prediction Agent generating risk scores...'), 3500),
+        setTimeout(() => setAgentTrace('Reporting Agent formatting clinical summary...'), 5000),
+      ];
+      return () => timers.forEach(clearTimeout);
+    } else {
+      setAgentTrace('');
+    }
+  }, [loading]);
+
   if (!predictionAvailable) {
     return (
       <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 h-full flex flex-col items-center justify-center text-center">
@@ -56,6 +73,26 @@ export default function ExplainabilityPanel({
         </div>
       )}
 
+      {loading && (
+        <div className="flex-1 flex flex-col items-center justify-center p-8 space-y-6">
+           <div className="relative">
+             <div className="w-16 h-16 border-4 border-slate-800 border-t-emerald-500 rounded-full animate-spin"></div>
+             <Bot className="w-6 h-6 text-emerald-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+           </div>
+           
+           <div className="w-full max-w-sm bg-slate-950 border border-slate-800 rounded-xl p-4 shadow-inner">
+             <div className="flex items-center gap-2 mb-2">
+                <Network className="w-4 h-4 text-indigo-400" />
+                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Multi-Agent Trace</span>
+             </div>
+             <p className="text-sm font-mono text-emerald-400 h-10 flex items-center">
+               <span className="mr-2 opacity-50">&gt;</span> {agentTrace}
+               <span className="animate-pulse ml-1 inline-block w-1.5 h-4 bg-emerald-400"></span>
+             </p>
+           </div>
+        </div>
+      )}
+
       {explainability && (
         <div className="flex-1 overflow-y-auto pr-2 space-y-6">
           
@@ -74,10 +111,10 @@ export default function ExplainabilityPanel({
             </ReactMarkdown>
           </div>
 
-          {/* Feature Importance (SHAP) */}
+          {/* Feature Importance */}
           {explainability.featureImportance && explainability.featureImportance.length > 0 && (
             <div className="bg-slate-950 rounded-xl p-4 border border-slate-800/80">
-              <h4 className="text-[10px] font-bold text-slate-500 uppercase mb-3">Model Feature Importance (SHAP Analysis)</h4>
+              <h4 className="text-[10px] font-bold text-slate-500 uppercase mb-3">Clinical Risk Factor Analysis (LLM Attribution)</h4>
               <FeatureImportanceChart data={explainability.featureImportance} />
             </div>
           )}

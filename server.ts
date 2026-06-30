@@ -85,6 +85,10 @@ app.post('/api/parse-document', upload.single('file'), async (req, res) => {
   }
 });
 
+import { db } from './src/db';
+import { patientHistory } from './src/db/schema';
+import crypto from 'crypto';
+
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({

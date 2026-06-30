@@ -12,42 +12,47 @@ export default function AgentWorkflowDialog({ onClose }: AgentWorkflowDialogProp
     {
       name: "Coordinator Agent",
       icon: Network,
-      color: "text-indigo-400",
-      bg: "bg-indigo-500/10",
-      desc: "Orchestrates workflow, routes user requests, and delegates tasks to sub-agents."
+      color: "text-indigo-400 dark:text-indigo-400",
+      bg: "bg-indigo-500/10 dark:bg-indigo-500/10",
+      desc: "Orchestrates workflow, routes user requests, and delegates tasks to specialized Gemini sub-agents."
     },
     {
-      name: "BigQuery Retrieval Agent",
+      name: "Document Understanding Agent",
       icon: Database,
-      color: "text-blue-400",
-      bg: "bg-blue-500/10",
-      desc: "Connects to hospital databases (MIMIC-IV via BigQuery) to retrieve vitals, labs, and history."
+      color: "text-blue-400 dark:text-blue-400",
+      bg: "bg-blue-500/10 dark:bg-blue-500/10",
+      desc: "Uses Gemini to parse and extract patient history and clinical data from uploaded medical documents (PDFs)."
     },
     {
       name: "Prediction Agent",
       icon: BrainCircuit,
-      color: "text-rose-400",
-      bg: "bg-rose-500/10",
-      desc: "Runs the Self-Supervised Multimodal Transformer model for sepsis and mortality forecasting."
+      color: "text-rose-400 dark:text-rose-400",
+      bg: "bg-rose-500/10 dark:bg-rose-500/10",
+      desc: "Uses Gemini as a predictive LLM agent for zero/few-shot sepsis and mortality forecasting based on clinical context."
     },
     {
       name: "Medical Knowledge Agent",
       icon: Bot,
-      color: "text-emerald-400",
-      bg: "bg-emerald-500/10",
-      desc: "Uses Gemini to cross-reference predictions with clinical guidelines (e.g., Sepsis Bundles)."
+      color: "text-emerald-400 dark:text-emerald-400",
+      bg: "bg-emerald-500/10 dark:bg-emerald-500/10",
+      desc: "Uses Gemini to cross-reference predictions with clinical guidelines (e.g., Sepsis Bundles) for actionable insights."
     },
     {
-      name: "Reporting Agent",
+      name: "Clinical Report Agent",
       icon: FileText,
-      color: "text-amber-400",
-      bg: "bg-amber-500/10",
-      desc: "Synthesizes data into clinical decision support summaries and generates SHAP explanations."
+      color: "text-amber-400 dark:text-amber-400",
+      bg: "bg-amber-500/10 dark:bg-amber-500/10",
+      desc: "Synthesizes data into clinical decision support summaries and generates natural language explanations of model predictions."
     }
   ];
 
   return (
-    <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+    >
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -97,6 +102,6 @@ export default function AgentWorkflowDialog({ onClose }: AgentWorkflowDialogProp
            </p>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

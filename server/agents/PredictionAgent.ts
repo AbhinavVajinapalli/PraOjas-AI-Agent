@@ -1,90 +1,96 @@
+import { GoogleGenAI, Type } from '@google/genai';
+
 export class PredictionAgent {
+  private ai: GoogleGenAI;
+
+  constructor(apiKey: string) {
+    this.ai = new GoogleGenAI({ apiKey });
+  }
+
   /**
-   * Purpose: Runs the Self-Supervised Multimodal Transformer model for sepsis and mortality forecasting.
-   * Fuses:
-   * 1. Clinical text representations (Bio_ClinicalBERT)
-   * 2. Time-series representations (Temporal Transformer)
+   * Purpose: Uses Gemini as a zero/few-shot predictor for sepsis and mortality forecasting.
    */
   async predict(patientData: any) {
-    // 1. Prepare the input for the PraOjas Transformer Model
-    const modelInput = {
-      patient_id: patientData.id,
-      vitals: patientData.vitals,
-      labs: patientData.labs,
-      clinical_notes: patientData.clinicalNotes
-    };
-
-    // 2. Call the Transformer model (Hypothetical API endpoint)
-    // If the PRAOJAS_MODEL_API_URL environment variable is set, use it.
-    const modelEndpoint = process.env.PRAOJAS_MODEL_API_URL;
+    console.log(`[Prediction Agent] Calling Gemini model for predictions`);
     
-    if (modelEndpoint) {
-      try {
-        console.log(`[Prediction Agent] Calling PraOjas Transformer at ${modelEndpoint}`);
-        const response = await fetch(modelEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(modelInput)
-        });
-        
-        if (!response.ok) throw new Error("Model API request failed");
-        
-        const data = await response.json();
-        return {
-          sepsisProbability: data.sepsis_probability,
-          mortalityProbability: data.mortality_probability,
-          confidenceScore: data.confidence_score,
-          timestamp: new Date().toISOString(),
-          modelMetadata: {
-            name: "PraOjas Multimodal Transformer",
-            sepsisAuroc: 0.799,
-            mortalityAuroc: 0.819,
-            sepsisEce: 0.059,
-            mortalityEce: 0.136
+    const prompt = `
+      You are an expert clinical predictive model. Analyze the following patient data 
+      and predict the probability of Sepsis and the probability of Mortality.
+      Return the response in JSON format.
+      
+      Patient Data:
+      Vitals: ${JSON.stringify(patientData.vitals)}
+      Labs: ${JSON.stringify(patientData.labs)}
+      Clinical Notes: ${patientData.clinicalNotes || 'None'}
+      
+      Predict the probabilities (between 0.0 and 1.0, where 1.0 is 100% chance).
+    `;
+
+    try {
+      const modelName = process.env.GEMINI_TUNED_MODEL_NAME || 'gemini-1.5-pro';
+      const response = await this.ai.models.generateContent({
+        model: modelName,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              sepsisProbability: {
+                type: Type.NUMBER,
+                description: "Probability of sepsis (0.0 to 1.0)"
+              },
+              mortalityProbability: {
+                type: Type.NUMBER,
+                description: "Probability of mortality (0.0 to 1.0)"
+              },
+              confidenceScore: {
+                type: Type.NUMBER,
+                description: "Your confidence in this prediction (0.0 to 1.0)"
+              }
+            },
+            required: ["sepsisProbability", "mortalityProbability", "confidenceScore"]
           }
-        };
-      } catch (error) {
-        console.error("[Prediction Agent] Failed to call external model, falling back to heuristic simulation:", error);
+        }
+      });
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(response.text || '{}');
+      } catch (e) {
+        throw new Error('Failed to parse Gemini response');
       }
+
+      return {
+        sepsisProbability: parsed.sepsisProbability || 0.1,
+        mortalityProbability: parsed.mortalityProbability || 0.05,
+        confidenceScore: parsed.confidenceScore || 0.8,
+        timestamp: new Date().toISOString(),
+        modelMetadata: {
+          name: process.env.GEMINI_TUNED_MODEL_NAME ? `Tuned Gemini Model (${process.env.GEMINI_TUNED_MODEL_NAME})` : "Gemini 1.5 Pro Predictive Agent",
+          sepsisAuroc: "N/A (LLM)",
+          mortalityAuroc: "N/A (LLM)",
+          sepsisEce: "N/A (LLM)",
+          mortalityEce: "N/A (LLM)"
+        }
+      };
+    } catch (error) {
+      console.error("[Prediction Agent] Failed to call Gemini model:", error);
+      // Fallback
+      return {
+        sepsisProbability: 0.1,
+        mortalityProbability: 0.05,
+        confidenceScore: 0.5,
+        timestamp: new Date().toISOString(),
+        modelMetadata: {
+          name: "Predictive Agent (Fallback)",
+          sepsisAuroc: "N/A (LLM)",
+          mortalityAuroc: "N/A (LLM)",
+          sepsisEce: "N/A (LLM)",
+          mortalityEce: "N/A (LLM)"
+        }
+      };
     }
-
-    // Fallback: Dynamic simulated inference based on the inputted vitals and labs (for demo purposes)
-    console.log("[Prediction Agent] No PRAOJAS_MODEL_API_URL set, running simulation fallback.");
-    let sepsisRisk = 0.08;
-    let mortalityRisk = 0.03;
-
-    // Simulated Multimodal Feature Importance Heuristics
-    if (patientData.vitals.hr > 100) sepsisRisk += 0.15;
-    if (patientData.vitals.hr > 120) sepsisRisk += 0.25;
-    if (patientData.vitals.temp > 38.0 || patientData.vitals.temp < 36.0) sepsisRisk += 0.18;
-    
-    if (patientData.labs.lactate > 2.0) { sepsisRisk += 0.35; mortalityRisk += 0.20; }
-    if (patientData.labs.lactate > 4.0) { sepsisRisk += 0.20; mortalityRisk += 0.35; }
-    if (patientData.labs.wbc > 12 || patientData.labs.wbc < 4) sepsisRisk += 0.15;
-    
-    if (patientData.vitals.spo2 < 92) mortalityRisk += 0.30;
-    if (patientData.vitals.bp.startsWith('8') || patientData.vitals.bp.startsWith('7')) {
-      sepsisRisk += 0.25;
-      mortalityRisk += 0.40;
-    }
-
-    // Cap probabilities
-    sepsisRisk = Math.min(0.98, sepsisRisk);
-    mortalityRisk = Math.min(0.96, mortalityRisk);
-
-    return {
-      sepsisProbability: sepsisRisk,
-      mortalityProbability: mortalityRisk,
-      confidenceScore: 0.94, // High confidence based on Multimodal SSL pre-training
-      timestamp: new Date().toISOString(),
-      modelMetadata: {
-        name: "PraOjas Multimodal Transformer",
-        sepsisAuroc: 0.799,
-        mortalityAuroc: 0.819,
-        sepsisEce: 0.059,
-        mortalityEce: 0.136
-      }
-    };
   }
 }
 

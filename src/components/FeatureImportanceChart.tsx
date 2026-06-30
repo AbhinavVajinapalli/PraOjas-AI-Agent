@@ -28,7 +28,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl">
         <p className="text-slate-200 text-sm font-medium mb-1">{label}</p>
         <p className={`text-xs font-bold ${isPositive ? 'text-rose-400' : 'text-emerald-400'}`}>
-          SHAP Value: {value > 0 ? '+' : ''}{value.toFixed(3)}
+          Attribution Score: {value > 0 ? '+' : ''}{value.toFixed(3)}
         </p>
         <p className="text-[10px] text-slate-400 mt-1">
           {isPositive ? 'Increases risk prediction' : 'Decreases risk prediction'}

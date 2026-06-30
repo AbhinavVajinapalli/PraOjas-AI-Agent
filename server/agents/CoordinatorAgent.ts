@@ -18,7 +18,7 @@ export class CoordinatorAgent {
    * Acts as the primary interface between the API endpoints and the Multi-Agent System (MAS).
    */
   constructor(apiKey: string) {
-    this.predictionAgent = new PredictionAgent();
+    this.predictionAgent = new PredictionAgent(apiKey);
     this.medicalKnowledgeAgent = new MedicalKnowledgeAgent(apiKey);
     this.documentUnderstandingAgent = new DocumentUnderstandingAgent(apiKey);
     this.validationAgent = new ValidationAgent(apiKey);
