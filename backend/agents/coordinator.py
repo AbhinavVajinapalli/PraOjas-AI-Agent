@@ -15,7 +15,7 @@ class CoordinatorAgent:
         self.document_parser = DocumentParserAgent()
         
     def process_prediction_request(self, patient_data: dict) -> dict:
-        logger.info(f"Coordinator processing prediction for patient {patient_data.get('patient_id')}")
+        logger.info("Coordinator processing prediction request")
         
         # 1. Preprocess data for Transformer
         processed_tensors = model_service.preprocess(
