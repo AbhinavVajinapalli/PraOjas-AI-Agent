@@ -68,14 +68,16 @@ export function createRouter(
   });
 
   /**
-   * GET /api/memory/:patientId
+   * POST /api/memory
    * Returns the persistent prediction history for a patient.
    */
-  router.get('/memory/:patientId', requireAuth, async (req, res) => {
+  router.post('/memory', requireAuth, async (req, res) => {
+    const { patientId } = req.body;
+    if (!patientId) return res.status(400).json({ error: 'patientId is required' });
     try {
       const memory = coordinatorAgent.getMemoryAgent();
-      const history = await memory.getPredictionHistory(req.params.patientId);
-      res.json({ patientId: req.params.patientId, history });
+      const history = await memory.getPredictionHistory(patientId);
+      res.json({ patientId, history });
     } catch (error) {
       logger.error({ error }, '[/api/memory] Error retrieving memory');
       res.status(500).json({ error: 'Failed to retrieve memory' });
