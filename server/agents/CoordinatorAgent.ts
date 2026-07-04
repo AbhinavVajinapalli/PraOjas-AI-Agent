@@ -54,7 +54,7 @@ export class CoordinatorAgent {
 
     // Step 2: Run prediction with self-correction loop
     const prediction = await RetryOrchestrator.withRetry(
-      (feedback) => this.predictionAgent.predict(patient, similarCases),
+      (feedback) => this.predictionAgent.predict(patient, similarCases, feedback),
       (result) => {
         if (typeof result.sepsisProbability !== 'number' || result.sepsisProbability < 0 || result.sepsisProbability > 1) {
           return { isValid: false, error: 'sepsisProbability out of range [0, 1]' };
