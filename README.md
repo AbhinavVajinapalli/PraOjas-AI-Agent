@@ -9,7 +9,7 @@
 
 **A Multi-Agent Clinical Decision Support System for ICU Risk Prediction and Explainable Healthcare Intelligence**
 
-PraOjas AI is a next-generation, AI-powered Clinical Decision Support System (CDSS) tailored for Intensive Care Unit (ICU) environments. It leverages a sophisticated multi-agent architecture powered by Google Gemini 1.5 Pro to deliver **real-time sepsis and mortality risk predictions** with explainable reasoning.
+PraOjas AI is a next-generation, AI-powered Clinical Decision Support System (CDSS) tailored for Intensive Care Unit (ICU) environments. It leverages a sophisticated multi-agent architecture powered by Google Gemini 1.5 Pro to deliver real-time sepsis risk prediction, mortality scoring, and explainable clinical insights.
 
 ---
 
@@ -639,22 +639,52 @@ app.use(cors({
 ### 1. Landing Page — "Predicting Critical Trajectories Before They Happen"
 *Hero section showcasing the mission of PraOjas AI with ICU monitoring visuals*
 
-![PraOjas AI Landing Page](https://imgur.com/placeholder1.png)
+<div style="text-align: center; margin: 20px 0;">
+  <a href="https://drive.google.com/file/d/1mU1Ao-JxNlLuT_OwqN2U8PBuFVU52pzF/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <img src="https://lh3.googleusercontent.com/d/1mU1Ao-JxNlLuT_OwqN2U8PBuFVU52pzF=w400" alt="PraOjas AI Landing Page" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
+  </a>
+  <p><strong>Click to view full screenshot</strong></p>
+</div>
 
 ### 2. ICU Overview Dashboard
 *High-level analytics with risk trends, patient status distribution, and key metrics (6 active ICU beds, 2 critical patients, 39% average sepsis risk)*
 
-![ICU Overview Dashboard](https://imgur.com/placeholder2.png)
+<div style="text-align: center; margin: 20px 0;">
+  <a href="https://drive.google.com/file/d/1g_VdqaflV8sGSY54EVayFlig_1s3MUHg/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <img src="https://lh3.googleusercontent.com/d/1g_VdqaflV8sGSY54EVayFlig_1s3MUHg=w400" alt="ICU Overview Dashboard" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
+  </a>
+  <p><strong>Click to view full screenshot</strong></p>
+</div>
 
 ### 3. ICU Roster Overview
 *Detailed patient registry with real-time vitals, sepsis risk scores, and patient status indicators (Critical/Warning/Stable)*
 
-![ICU Roster Overview](https://imgur.com/placeholder3.png)
+<div style="text-align: center; margin: 20px 0;">
+  <a href="https://drive.google.com/file/d/1mnTGstUANcbUH3G-vp7DPlYaPYz5_-RP/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <img src="https://lh3.googleusercontent.com/d/1mnTGstUANcbUH3G-vp7DPlYaPYz5_-RP=w400" alt="ICU Roster Overview" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
+  </a>
+  <p><strong>Click to view full screenshot</strong></p>
+</div>
 
-### 4. Settings & Preferences
+### 4. Patient Profile & Risk Assessment
+*Comprehensive patient view with real-time vitals, risk scores, and clinical history*
+
+<div style="text-align: center; margin: 20px 0;">
+  <a href="https://drive.google.com/file/d/1rZw31A9F-4NFu_Xptp-ufi-7JTnwwdc8/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <img src="https://lh3.googleusercontent.com/d/1rZw31A9F-4NFu_Xptp-ufi-7JTnwwdc8=w400" alt="Patient Profile & Risk Assessment" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
+  </a>
+  <p><strong>Click to view full screenshot</strong></p>
+</div>
+
+### 5. Settings & Preferences
 *User profile, security settings, authentication management, and HIPAA compliance options*
 
-![Settings & Preferences](https://imgur.com/placeholder4.png)
+<div style="text-align: center; margin: 20px 0;">
+  <a href="https://drive.google.com/file/d/1_0xdNFiWGp1TA_2PV8QzlNRhuPjEaVoy/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <img src="https://lh3.googleusercontent.com/d/1_0xdNFiWGp1TA_2PV8QzlNRhuPjEaVoy=w400" alt="Settings & Preferences" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
+  </a>
+  <p><strong>Click to view full screenshot</strong></p>
+</div>
 
 ### Live Demo
 
