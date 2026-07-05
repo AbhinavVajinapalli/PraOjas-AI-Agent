@@ -918,7 +918,7 @@ Found a bug? Have a feature request? Open an [issue](https://github.com/shashidh
 | **Deployment** | [deployment/README.md](deployment/README.md) |
 | **Contributing** | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | **License** | [LICENSE](LICENSE) |
-| **Server Agents** | [server/README.md](server/README.md) (coming soon) |
+| **Server Agents** | [server/README.md](server/README.md) |
 | **Issues** | [GitHub Issues](https://github.com/shashidhar-02/PraOjas-AI-Agent/issues) |
 | **Discussions** | [GitHub Discussions](https://github.com/shashidhar-02/PraOjas-AI-Agent/discussions) |
 
