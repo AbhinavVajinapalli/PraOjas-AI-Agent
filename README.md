@@ -168,7 +168,7 @@ flowchart TD
 
 ---
 
-## 🏆 Evaluator Note: MCP (Model Context Protocol) Integration
+## MCP (Model Context Protocol) Integration
 
 For evaluation purposes, please note that **PraOjas does not just consume an MCP server—it IS an MCP Server.** 
 
