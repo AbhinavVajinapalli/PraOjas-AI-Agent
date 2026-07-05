@@ -1,5 +1,5 @@
-import { getDb } from '../../src/db/index.js';
-import { patientHistory, aiPredictions, agentDecisions, clinicalRecords } from '../../src/db/schema.js';
+import { getDb } from '../db/index.js';
+import { patientHistory, aiPredictions, agentDecisions, clinicalRecords } from '../db/schema.js';
 import { eq, desc } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 

@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import { CoordinatorAgent } from './server/agents/CoordinatorAgent';
 import { MonitoringAgent, PatientAlert } from './server/agents/MonitoringAgent';
-import { isDbConfigured } from './src/db';
+import { isDbConfigured } from './server/db';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { logger } from './server/utils/logger';
@@ -87,6 +87,7 @@ app.use('/api', apiRouter);
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
+      root: path.resolve(process.cwd(), 'frontend'),
       server: { middlewareMode: true },
       appType: 'spa',
     });

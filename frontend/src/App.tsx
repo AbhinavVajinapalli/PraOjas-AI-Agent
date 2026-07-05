@@ -25,12 +25,16 @@ import {
   Cell,
 } from "recharts";
 import { motion, AnimatePresence } from "framer-motion";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import ManualEntryModal from "./components/ManualEntryModal";
+import AddPatientModal from "./components/AddPatientModal";
 import LandingPage from "./pages/LandingPage";
 import RosterView from "./pages/RosterView";
 import PatientDashboard from "./pages/PatientDashboard";
 import AIAnalysisView from "./pages/AIAnalysisView";
+import AlertsView from "./pages/AlertsView";
+import Sidebar from "./components/Sidebar";
 
 // ─────────────────────────────────────────────────────────
 // TYPES
@@ -1047,207 +1051,117 @@ export function extractSymptoms(patient: Patient): string[] {
 // ─────────────────────────────────────────────────────────
 
 function AppContent() {
-  const { theme, setTheme } = useTheme();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [view, setView] = useState<View>("landing");
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem("praojas_auth") === "true";
+  });
   const [patients, setPatients] = useState<Patient[]>(MOCK_PATIENTS);
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [showAddPatient, setShowAddPatient] = useState(false);
 
-  function handleSelectPatient(p: Patient) {
-    setSelectedPatient(p);
-    setView("dashboard");
-  }
+  const login = () => {
+    localStorage.setItem("praojas_auth", "true");
+    setIsAuthenticated(true);
+  };
 
-  function handleAnalysis() {
-    setView("analysis");
-  }
+  const logout = () => {
+    localStorage.removeItem("praojas_auth");
+    setIsAuthenticated(false);
+  };
 
-  function handleBack() {
-    if (view === "analysis") setView("dashboard");
-    else if (view === "dashboard") { setView("roster"); setSelectedPatient(null); }
-    else if (view === "roster") { setView("landing"); }
-    else if (view === "auth") { setView("landing"); }
-  }
-
-  function handleAddPatient(data: { name: string, age: number, gender: string, department: string, status: "Critical"|"Warning"|"Stable" }) {
-    const newPatient: Patient = {
-      id: `PT-${Math.floor(Math.random() * 100000).toString().padStart(5, '0')}`,
-      name: data.name,
-      age: data.age,
-      gender: data.gender as any,
-      department: data.department,
-      status: data.status,
-      admissionDate: new Date().toISOString(),
-      sepsisRisk: data.status === "Critical" ? 75 : data.status === "Warning" ? 45 : 12,
-      mortalityRisk: data.status === "Critical" ? 40 : data.status === "Warning" ? 15 : 2,
-      vitals: {
-        hr: data.status === "Stable" ? 75 : 115,
-        bp: data.status === "Stable" ? "120/80" : "88/50",
-        temp: 37.2,
-        rr: data.status === "Stable" ? 16 : 28,
-        spo2: data.status === "Stable" ? 98 : 91,
-        lactate: data.status === "Stable" ? 1.2 : 3.8
-      },
-      labs: {
-        wbc: data.status === "Stable" ? 7.5 : 18.2,
-        lactate: data.status === "Stable" ? 1.2 : 3.8,
-        creatinine: data.status === "Stable" ? 0.9 : 2.1,
-        glucose: 140,
-        sodium: 138,
-        platelets: 250
-      },
-      medications: [],
-      clinicalNotes: `Newly admitted ${data.age}yo ${data.gender} to ${data.department}. Status: ${data.status}.`,
-      decisionLogs: []
-    };
-    setPatients([newPatient, ...patients]);
-    setSelectedPatient(newPatient);
-    setView("dashboard");
+  function handleAddPatient(data: any) {
+    setPatients([data, ...patients]);
     setShowAddPatient(false);
   }
 
-  return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      {/* Top accent gradient */}
-      <div className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-cyan-400 to-indigo-600 z-50" />
-
-      {/* Sidebar (hidden on landing and auth) */}
-      {view !== "landing" && view !== "auth" && (
-        <PatientList
-          patients={patients}
-          selectedId={selectedPatient?.id ?? null}
-          onSelect={handleSelectPatient}
-          onAddPatient={() => setShowAddPatient(true)}
-          theme={theme}
-          setTheme={setTheme}
+  // A layout wrapper that includes the sidebar for authenticated routes
+  const AppLayout = ({ children }: { children: React.ReactNode }) => {
+    if (!isAuthenticated) return <Navigate to="/auth" />;
+    return (
+      <div className="flex h-screen overflow-hidden bg-background">
+        <div className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 via-cyan-400 to-indigo-600 z-50" />
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
+          {children}
+        </main>
+        <AddPatientModal 
+          isOpen={showAddPatient} 
+          onClose={() => setShowAddPatient(false)} 
+          onAdd={handleAddPatient} 
         />
-      )}
+        {/* Floating add button for convenience across views */}
+        <button 
+          onClick={() => setShowAddPatient(true)}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full shadow-xl shadow-indigo-500/30 flex items-center justify-center transition-transform hover:scale-105 z-40"
+        >
+          <Plus className="w-6 h-6" />
+        </button>
+      </div>
+    );
+  };
 
-      {/* Main content */}
-      <main className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
-        <AnimatePresence mode="wait">
-          {view === "landing" && (
-            <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <LandingPage onEnter={() => isAuthenticated ? setView("roster") : setView("auth")} />
-            </motion.div>
-          )}
-          {view === "auth" && (
-            <motion.div key="auth" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-              <AuthPage onLogin={() => { setIsAuthenticated(true); setView("roster"); }} />
-            </motion.div>
-          )}
-          {view === "roster" && isAuthenticated && (
-            <motion.div key="roster" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-              <RosterView patients={patients} onSelectPatient={handleSelectPatient} />
-            </motion.div>
-          )}
-          {view === "dashboard" && selectedPatient && (
-            <motion.div key="dashboard" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
-              <PatientDashboard 
-                patient={selectedPatient} 
-                onAnalysis={handleAnalysis} 
-                onBack={handleBack} 
-                onUpdatePatient={(updatedData) => {
-                  const newPatient = {
-                    ...selectedPatient,
-                    ...updatedData,
-                    vitals: { ...selectedPatient.vitals, ...(updatedData.vitals || {}) },
-                    labs: { ...selectedPatient.labs, ...(updatedData.labs || {}) }
-                  };
-                  setSelectedPatient(newPatient);
-                  setPatients(patients.map(p => p.id === newPatient.id ? newPatient : p));
-                }}
-              />
-            </motion.div>
-          )}
-          {view === "analysis" && selectedPatient && (
-            <motion.div key="analysis" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
-              <AIAnalysisView patient={selectedPatient} onBack={handleBack} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
+  // Wrapper for Patient Dashboard to pass the selected patient
+  const PatientDashboardWrapper = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const patientId = location.pathname.split('/').pop();
+    const patient = patients.find(p => p.id === patientId) || patients[0];
 
-      {/* Add Patient Modal */}
-      {showAddPatient && (
-        <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-4">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-card border border-border rounded-2xl w-full max-w-md p-6 shadow-2xl"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-foreground">Register New Patient</h2>
-              <button onClick={() => setShowAddPatient(false)} className="p-1.5 hover:bg-secondary rounded-lg"><X className="w-5 h-5 text-muted-foreground" /></button>
-            </div>
-            
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const fd = new FormData(e.currentTarget);
-              handleAddPatient({
-                name: fd.get("name") as string,
-                age: parseInt(fd.get("age") as string),
-                gender: fd.get("gender") as string,
-                department: fd.get("department") as string,
-                status: fd.get("status") as any,
-              });
-            }} className="space-y-4">
-              
-              <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Full Name</label>
-                <input required name="name" type="text" className="w-full bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-1 focus:ring-indigo-500 outline-none" placeholder="e.g. Jane Doe" />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Age</label>
-                  <input required name="age" type="number" min="0" max="120" className="w-full bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-1 focus:ring-indigo-500 outline-none" placeholder="e.g. 45" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Gender</label>
-                  <select required name="gender" className="w-full bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-1 focus:ring-indigo-500 outline-none">
-                    <option value="F">Female</option>
-                    <option value="M">Male</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Department</label>
-                <select required name="department" className="w-full bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-1 focus:ring-indigo-500 outline-none">
-                  <option value="Medical ICU">Medical ICU</option>
-                  <option value="Surgical ICU">Surgical ICU</option>
-                  <option value="Neuro ICU">Neuro ICU</option>
-                  <option value="Cardiac ICU">Cardiac ICU</option>
-                </select>
-              </div>
+    const handleUpdatePatient = (updatedData: any) => {
+      const newPatient = {
+        ...patient,
+        ...updatedData,
+        vitals: { ...patient.vitals, ...(updatedData.vitals || {}) },
+        labs: { ...patient.labs, ...(updatedData.labs || {}) }
+      };
+      setPatients(patients.map(p => p.id === newPatient.id ? newPatient : p));
+    };
 
-              <div>
-                <label className="block text-xs font-semibold text-muted-foreground uppercase mb-1.5">Initial Status</label>
-                <select required name="status" className="w-full bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:ring-1 focus:ring-indigo-500 outline-none">
-                  <option value="Stable">Stable</option>
-                  <option value="Warning">Warning</option>
-                  <option value="Critical">Critical</option>
-                </select>
-              </div>
+    return (
+      <PatientDashboard 
+        patient={patient} 
+        onAnalysis={() => navigate(`/patient/${patient.id}/analysis`)}
+        onBack={() => navigate('/dashboard')}
+        onUpdatePatient={handleUpdatePatient}
+      />
+    );
+  };
 
-              <div className="pt-4 border-t border-border flex justify-end gap-3">
-                <button type="button" onClick={() => setShowAddPatient(false)} className="px-4 py-2 text-sm font-semibold text-muted-foreground hover:bg-secondary rounded-lg transition-colors">Cancel</button>
-                <button type="submit" className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors">Register Patient</button>
-              </div>
-            </form>
-          </motion.div>
-        </div>
-      )}
-    </div>
+  // Wrapper for Analysis View
+  const AnalysisWrapper = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const segments = location.pathname.split('/');
+    const patientId = segments[segments.length - 2];
+    const patient = patients.find(p => p.id === patientId) || patients[0];
+    return <AIAnalysisView patient={patient} onBack={() => navigate(-1)} />;
+  };
+
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage onEnter={() => isAuthenticated ? window.location.href = '/dashboard' : window.location.href = '/auth'} />} />
+      <Route path="/auth" element={
+        isAuthenticated ? <Navigate to="/dashboard" /> : <AuthPage onLogin={() => { login(); window.location.href = '/dashboard'; }} />
+      } />
+      
+      {/* Protected Routes */}
+      <Route path="/dashboard" element={<AppLayout><RosterView patients={patients} onSelectPatient={(p) => window.location.href = `/patient/${p.id}`} /></AppLayout>} />
+      <Route path="/patients" element={<AppLayout><RosterView patients={patients} onSelectPatient={(p) => window.location.href = `/patient/${p.id}`} /></AppLayout>} />
+      <Route path="/patient/:id" element={<AppLayout><PatientDashboardWrapper /></AppLayout>} />
+      <Route path="/patient/:id/analysis" element={<AppLayout><AnalysisWrapper /></AppLayout>} />
+      <Route path="/alerts" element={<AppLayout><AlertsView /></AppLayout>} />
+      <Route path="/reports" element={<AppLayout><div className="p-8 text-center text-muted-foreground">Reports View (Coming Soon)</div></AppLayout>} />
+      <Route path="/settings" element={<AppLayout><div className="p-8 text-center text-muted-foreground">Settings View (Coming Soon)</div></AppLayout>} />
+      
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
 export default function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

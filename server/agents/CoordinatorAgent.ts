@@ -6,6 +6,7 @@ import { ClinicalNLPAgent } from './ClinicalNLPAgent';
 import { ClinicalReportAgent } from './ClinicalReportAgent';
 import { MemoryAgent } from './MemoryAgent';
 import { RetryOrchestrator } from './RetryOrchestrator';
+import { TreatmentRecommendationAgent } from './TreatmentRecommendationAgent';
 
 export class CoordinatorAgent {
   private predictionAgent: PredictionAgent;
@@ -15,6 +16,7 @@ export class CoordinatorAgent {
   private clinicalNLPAgent: ClinicalNLPAgent;
   private clinicalReportAgent: ClinicalReportAgent;
   private memoryAgent: MemoryAgent;
+  private treatmentRecommendationAgent: TreatmentRecommendationAgent;
 
   /**
    * Purpose: Orchestrates the full agentic workflow.
@@ -31,6 +33,7 @@ export class CoordinatorAgent {
     this.clinicalNLPAgent   = new ClinicalNLPAgent(apiKey);
     this.clinicalReportAgent = new ClinicalReportAgent(apiKey);
     this.memoryAgent        = new MemoryAgent();
+    this.treatmentRecommendationAgent = new TreatmentRecommendationAgent(apiKey);
   }
 
   /**
@@ -131,20 +134,34 @@ export class CoordinatorAgent {
       }
     );
 
+    // Step 4: Generate treatment recommendations (Custom Agent)
+    const recommendations = await RetryOrchestrator.withRetry(
+      (feedback) => this.treatmentRecommendationAgent.recommendInterventions(
+        patient, prediction.sepsisProbability, feedback
+      ),
+      (result) => {
+        if (!result.riskLevel || !Array.isArray(result.immediateInterventions)) {
+          return { isValid: false, error: 'Missing riskLevel or immediateInterventions array' };
+        }
+        return { isValid: true };
+      }
+    );
+
     // Log the explanation decision
     await this.memoryAgent.logAgentDecision(
       'CoordinatorAgent',
       'FULL_EXPLANATION_PIPELINE',
       patient.id,
       { predictionSepsis: prediction.sepsisProbability },
-      { reportGenerated: true, nlpDiagnoses: nlpEntities.diagnoses }
+      { reportGenerated: true, nlpDiagnoses: nlpEntities.diagnoses, recommendationRisk: recommendations.riskLevel }
     );
 
     return {
       explanation: explainabilityData.explanation,
       featureImportance: explainabilityData.featureImportance,
       nlpEntities,
-      report
+      report,
+      recommendations
     };
   }
 

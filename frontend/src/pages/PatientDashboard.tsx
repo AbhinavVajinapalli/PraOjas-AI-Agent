@@ -401,6 +401,17 @@ export default function PatientDashboard({
           </div>
         </div>
       </div>
+
+      <ManualEntryModal 
+        isOpen={isManualEntryOpen}
+        onClose={() => setIsManualEntryOpen(false)}
+        patientName={patient.name}
+        onUpdate={(data) => {
+          console.log("Updated vitals/labs:", data);
+          setIsManualEntryOpen(false);
+          // Normally this would dispatch an action or API call to update the backend
+        }}
+      />
     </div>
   );
 }

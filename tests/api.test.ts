@@ -157,11 +157,13 @@ describe('POST /api/patients/register', () => {
   });
 });
 
-// ─── GET /api/memory/:patientId ──────────────────────────────────────────────
-describe('GET /api/memory/:patientId', () => {
+// ─── POST /api/memory ────────────────────────────────────────────────────────
+describe('POST /api/memory', () => {
   it('should return prediction history for a known patient', async () => {
     const { app } = buildTestApp();
-    const res = await request(app).get('/api/memory/P-001');
+    const res = await request(app)
+      .post('/api/memory')
+      .send({ patientId: 'P-001' });
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('patientId', 'P-001');
