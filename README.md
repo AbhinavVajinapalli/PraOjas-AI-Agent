@@ -897,7 +897,7 @@ You're free to use, modify, and distribute this project for personal and commerc
 
 ### Report Issues
 
-Found a bug? Have a feature request? Open an [issue](https://github.com/shashidhar-02/PraOjas-AI-Agent/issues/new).
+Found a bug? Have a feature request? Open an [issue]().
 
 ### Questions?
 
