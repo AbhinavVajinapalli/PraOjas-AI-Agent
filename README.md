@@ -666,16 +666,8 @@ app.use(cors({
   <p><strong>Click to view full screenshot</strong></p>
 </div>
 
-### 4. Patient Profile & Risk Assessment
-*Comprehensive patient view with real-time vitals, risk scores, and clinical history*
 
-<div style="text-align: center; margin: 20px 0;">
-  <a href="https://drive.google.com/file/d/1rZw31A9F-4NFu_Xptp-ufi-7JTnwwdc8/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-    <img src="https://lh3.googleusercontent.com/d/1rZw31A9F-4NFu_Xptp-ufi-7JTnwwdc8=w400" alt="Patient Profile & Risk Assessment" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 100%; height: auto;">
-  </a>
-  <p><strong>Click to view full screenshot</strong></p>
-</div>
-### 5. Patient Profile
+### 4. Patient Profile
 *Comprehensive patient view with real-time vitals, risk scores, and clinical history*
 
 <p align="center">
@@ -687,7 +679,7 @@ app.use(cors({
 </p>
 
 <p align="center"><b>Click the image to view it in full size.</b></p>
-### 6. Settings & Preferences
+### 5. Settings & Preferences
 *User profile, security settings, authentication management, and HIPAA compliance options*
 
 <p align="center">
