@@ -21,7 +21,7 @@ export default function Sidebar() {
       <div className="px-6 py-8 flex items-center gap-3">
         {/* Premium Medical AI Logo */}
         <div className="relative flex items-center justify-center w-10 h-10 flex-shrink-0">
-          <img src="/logo-2.jpg" alt="PraOjas AI" className="w-full h-full object-cover rounded-xl shadow-md" />
+          <img src="/logo-2.png" alt="PraOjas AI" className="w-full h-full object-contain drop-shadow-sm" />
         </div>
         <span className="font-semibold text-lg text-slate-900 dark:text-white tracking-wide">PraOjas AI</span>
       </div>

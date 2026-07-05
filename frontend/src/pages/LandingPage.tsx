@@ -13,9 +13,8 @@ export default function LandingPage({ onEnter }: { onEnter: () => void }) {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
-            <HeartPulse className="w-6 h-6" />
-            <span className="text-xl font-bold tracking-tight text-foreground">PraOjas AI</span>
+          <div className="flex items-center">
+            <img src="/logo-1.png" alt="PraOjas AI" className="h-10 object-contain drop-shadow-sm" />
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
@@ -255,9 +254,8 @@ export default function LandingPage({ onEnter }: { onEnter: () => void }) {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-4">
-                <HeartPulse className="w-5 h-5" />
-                <span className="text-lg font-bold text-foreground">PraOjas AI</span>
+              <div className="flex items-center mb-4">
+                <img src="/logo-1.png" alt="PraOjas AI" className="h-8 object-contain drop-shadow-sm" />
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Next-generation clinical intelligence for intensive care. Predicting critical trajectories before they happen.

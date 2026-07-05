@@ -28,6 +28,7 @@
     "google-auth-library": "^10.9.0",
     "helmet": "^8.2.0",
     "html2canvas": "^1.4.1",
+    "jimp": "^1.6.1",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "lucide-react": "^0.546.0",
