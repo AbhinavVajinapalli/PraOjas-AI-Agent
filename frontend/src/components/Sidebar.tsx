@@ -20,32 +20,8 @@ export default function Sidebar() {
       {/* Logo Area */}
       <div className="px-6 py-8 flex items-center gap-3">
         {/* Premium Medical AI Logo */}
-        <div className="relative flex items-center justify-center w-8 h-8 flex-shrink-0">
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="gradP" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#4f46e5" />
-                <stop offset="100%" stopColor="#2563eb" />
-              </linearGradient>
-              <linearGradient id="gradO" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#22d3ee" />
-                <stop offset="100%" stopColor="#6366f1" />
-              </linearGradient>
-              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="-2" dy="4" stdDeviation="3" floodOpacity="0.35" floodColor="#020617"/>
-              </filter>
-            </defs>
-            
-            {/* P Stem */}
-            <rect x="25" y="15" width="20" height="70" rx="10" fill="url(#gradP)" />
-
-            {/* P Loop (overlapping ribbon) */}
-            <path d="M 45 15 
-                     A 30 30 0 1 1 45 75 
-                     L 45 57 
-                     A 12 12 0 1 0 45 33 
-                     Z" fill="url(#gradO)" filter="url(#shadow)" />
-          </svg>
+        <div className="relative flex items-center justify-center w-10 h-10 flex-shrink-0">
+          <img src="/logo-new.png" alt="PraOjas AI" className="w-full h-full object-contain drop-shadow-sm" />
         </div>
         <span className="font-semibold text-lg text-slate-900 dark:text-white tracking-wide">PraOjas AI</span>
       </div>
