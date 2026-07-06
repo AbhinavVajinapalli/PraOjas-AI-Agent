@@ -9,7 +9,36 @@
 
 **A Multi-Agent Clinical Decision Support System for ICU Risk Prediction and Explainable Healthcare Intelligence**
 
-PraOjas AI is a next-generation, AI-powered Clinical Decision Support System (CDSS) tailored for Intensive Care Unit (ICU) environments. It leverages a sophisticated multi-agent architecture to deliver real-time sepsis risk prediction, mortality scoring, and explainable clinical insights.
+PraOjas AI is a next-generation, AI-powered Clinical Decision Support System (CDSS) tailored for Intensive Care Unit (ICU) environments. It leverages a sophisticated multi-agent architecture to deliver proactive risk assessment, explainable predictions, and actionable clinical recommendations before patient deterioration occurs.
+
+---
+
+## About the Name
+
+**PraOjas** is a portmanteau with deep clinical significance:
+
+- **Pra** → Before, Forward, Proactive, Predictive  
+  Emphasizes the system's ability to predict patient trajectories **before** critical events occur.
+
+- **Ojas** → Vitality, Life Force (from Ayurveda)  
+  Symbolizes the system's mission to preserve and enhance patient wellbeing by maintaining vital stability.
+
+**Combined Interpretation:**  
+**"Proactive Understanding of Patient Vitality Before Deterioration"** — PraOjas AI anticipates patient crises, safeguarding the life force of ICU patients through early, evidence-based clinical intelligence.
+
+---
+
+## Dataset & Model Training
+
+PraOjas AI utilizes **MIMIC-IV dataset** for comprehensive model development and performance optimization:
+
+- **Dataset:** MIMIC-IV — A large-scale, freely available database of 40,000+ ICU patient records
+- **Purpose:** Training and validation of sepsis and mortality risk prediction models
+- **Data Elements:** Patient vitals, laboratory values, clinical notes, demographics, and outcomes
+- **Learning Approach:** Supervised learning on historical patient trajectories to improve predictive accuracy and generalization
+- **Performance Optimization:** Continuous model evaluation and refinement on MIMIC-IV benchmarks to ensure clinical reliability
+
+This dataset-driven approach enables PraOjas AI to learn complex clinical patterns and deliver predictions grounded in real-world ICU data.
 
 ---
 
@@ -172,7 +201,7 @@ flowchart TD
 
 For evaluation purposes, please note that **PraOjas does not just consume an MCP server—it IS an MCP Server.** 
 
-By implementing an MCP Server interface, we have decoupled our specialized medical AI logic from our frontend, allowing **any external AI system** (like Claude Desktop, Cursor, or other agent frameworks) to connect to PraOjas and utilize its clinical agents via standard I/O.
+By implementing an MCP Server interface, we have decoupled our specialized medical AI logic from our frontend, allowing **any external AI system** (like Claude Desktop, Cursor, or other agent frameworks) to leverage our clinical reasoning capabilities.
 
 **Implementation Details:**
 - **Location:** The complete MCP server implementation is located in the `mcp/` directory (`mcp/server.ts`).
@@ -899,6 +928,7 @@ You're free to use, modify, and distribute this project for personal and commerc
 - 📚 **Sepsis-3 Clinical Guidelines** — Evidence-based sepsis criteria (SIRS, qSOFA)
 - 🏥 **Clinical Domain Expertise** — ICU clinician consultations and feedback
 - 🔧 **Open-Source Community** — React, Express, TypeScript, Vitest communities
+- 📊 **MIMIC-IV Dataset** — Publicly available ICU database for model training and validation
 
 ### Libraries & Tools
 
@@ -948,8 +978,8 @@ Found a bug? Have a feature request? Open an [issue](https://github.com/AbhinavV
 | **Contributing** | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | **License** | [LICENSE](LICENSE) |
 | **Server Agents** | [server/README.md](server/README.md) |
-| **Issues** | [GitHub Issues](https://github.com/shashidhar-02/PraOjas-AI-Agent/issues) |
-| **Discussions** | [GitHub Discussions](https://github.com/shashidhar-02/PraOjas-AI-Agent/discussions) |
+| **Issues** | [GitHub Issues](https://github.com/AbhinavVajinapalli/PraOjas-AI-Agent/issues) |
+| **Discussions** | [GitHub Discussions](https://github.com/AbhinavVajinapalli/PraOjas-AI-Agent/discussions) |
 
 ---
 
