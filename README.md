@@ -134,7 +134,7 @@ sequenceDiagram
     participant User as Frontend (Doctor)
     participant API as Backend API
     participant Coord as Coordinator Agent
-    participant Gemini as Google Gemini 1.5 Pro
+    participant Gemini as Google Gemini Models
     
     User->>API: Submits Patient Vitals/Notes
     API->>Coord: Route Request
