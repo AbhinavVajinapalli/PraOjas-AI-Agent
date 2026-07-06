@@ -160,7 +160,7 @@ sequenceDiagram
 
 ### Agent Orchestration
 
-![Multi-Agent Workflow](assets/workflow.png)
+![Multi-Agent Workflow](assets/workflow.svg)
 
 ### Agent Responsibilities
 
