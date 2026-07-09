@@ -27,14 +27,18 @@ export default function AuthPage({ onLogin }: { onLogin: () => void }) {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="bg-card border border-border rounded-2xl shadow-2xl p-8 backdrop-blur-sm">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 mb-4">
-              <HeartPulse className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">PraOjas AI</h1>
-            <p className="text-sm text-muted-foreground mt-1">Clinical Decision Support System</p>
+        <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden backdrop-blur-sm">
+          {/* Dark branded top section matching logo background */}
+          <div className="bg-[#0a1628] flex flex-col items-center justify-center px-8 py-6">
+            <img
+              src="/logo-1.jpg"
+              alt="PraOjas AI"
+              className="h-16 w-auto object-contain"
+              style={{ maxWidth: '240px' }}
+            />
           </div>
+          <div className="px-8 pt-6 pb-8">
+          <p className="text-sm text-muted-foreground text-center mb-6">Clinical Decision Support System</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -92,6 +96,7 @@ export default function AuthPage({ onLogin }: { onLogin: () => void }) {
               HIPAA Compliant Secure Login
             </div>
           </div>
+        </div>
         </div>
       </motion.div>
     </div>

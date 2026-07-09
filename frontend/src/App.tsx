@@ -453,16 +453,13 @@ export function PatientList({
   return (
     <div className="w-72 flex-shrink-0 flex flex-col h-screen bg-card border-r border-border">
       {/* Logo */}
-      <div className="px-5 pt-6 pb-4 border-b border-border">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/25">
-            <HeartPulse className="w-4.5 h-4.5 text-white" strokeWidth={2} />
-          </div>
-          <div>
-            <div className="font-bold text-sm text-foreground tracking-tight">PraOjas AI</div>
-            <div className="text-xs text-muted-foreground leading-tight">Clinical Decision Support</div>
-          </div>
-        </div>
+      <div className="w-full flex items-center bg-[#0a1628] px-4 py-2.5 border-b border-[#0e2040]">
+        <img
+          src="/logo-2.jpg"
+          alt="PraOjas AI"
+          className="h-11 w-auto object-contain"
+          style={{ maxWidth: '170px' }}
+        />
       </div>
 
       {/* Search + Add */}

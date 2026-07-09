@@ -17,13 +17,14 @@ export default function Sidebar() {
 
   return (
     <div className="w-64 flex-shrink-0 flex flex-col h-screen bg-slate-50 dark:bg-[#0B1120] border-r border-slate-200 dark:border-[#1e293b] transition-colors">
-      {/* Logo Area */}
-      <div className="px-6 py-8 flex items-center gap-3">
-        {/* Premium Medical AI Logo */}
-        <div className="relative flex items-center justify-center w-10 h-10 flex-shrink-0">
-          <img src="/logo-2.png" alt="PraOjas AI" className="w-full h-full object-contain drop-shadow-sm" />
-        </div>
-        <span className="font-semibold text-lg text-slate-900 dark:text-white tracking-wide">PraOjas AI</span>
+      {/* Logo Area — dark strip matching logo background */}
+      <div className="w-full flex items-center justify-start bg-[#0a1628] px-4 py-3">
+        <img
+          src="/logo-2.jpg"
+          alt="PraOjas AI"
+          className="h-14 w-auto object-contain"
+          style={{ maxWidth: '200px' }}
+        />
       </div>
 
       {/* Navigation */}

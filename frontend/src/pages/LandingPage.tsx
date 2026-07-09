@@ -11,15 +11,15 @@ export default function LandingPage({ onEnter }: { onEnter: () => void }) {
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-y-auto">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full bg-[#0a1628] border-b border-[#0e2040] shadow-lg">
+        <div className="container mx-auto px-6 h-18 flex items-center justify-between" style={{ height: '72px' }}>
           <div className="flex items-center">
-            <img src="/logo-1.png" alt="PraOjas AI" className="h-10 object-contain drop-shadow-sm" />
+            <img src="/logo-1.jpg" alt="PraOjas AI" className="h-14 w-auto object-contain" style={{ maxWidth: '240px' }} />
           </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-            <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#about" className="hover:text-foreground transition-colors">About Us</a>
-            <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href="#features" className="text-slate-300 hover:text-white transition-colors">Features</a>
+            <a href="#about" className="text-slate-300 hover:text-white transition-colors">About Us</a>
+            <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-4">
             <ThemeSwitcher theme={theme} setTheme={setTheme} />
@@ -27,7 +27,7 @@ export default function LandingPage({ onEnter }: { onEnter: () => void }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onEnter}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm shadow-indigo-500/25 flex items-center gap-2"
+              className="px-4 py-2 bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm shadow-indigo-500/25 flex items-center gap-2"
             >
               Go to Dashboard <ArrowRight className="w-4 h-4" />
             </motion.button>
@@ -255,7 +255,7 @@ export default function LandingPage({ onEnter }: { onEnter: () => void }) {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center mb-4">
-                <img src="/logo-1.png" alt="PraOjas AI" className="h-8 object-contain drop-shadow-sm" />
+                <img src="/logo-1.jpg" alt="PraOjas AI" className="h-10 w-auto object-contain rounded-lg drop-shadow-md" style={{ maxWidth: '180px' }} />
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Next-generation clinical intelligence for intensive care. Predicting critical trajectories before they happen.
