@@ -27,7 +27,7 @@
     "express-rate-limit": "^8.5.2",
     "firebase": "^12.15.0",
     "firebase-admin": "^14.1.0",
-    "google-auth-library": "^10.9.0",
+    "google-auth-library": "^11.0.2",
     "helmet": "^8.2.0",
     "html2canvas": "^1.4.1",
     "jimp": "^1.6.1",
