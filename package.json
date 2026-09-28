@@ -61,7 +61,7 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^7.2.0",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.6.0",
     "drizzle-kit": "^0.31.10",
     "esbuild": "^0.28.1",
     "jsdom": "29.1.1",
