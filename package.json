@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.3.1",
-    "@google/genai": "^2.4.0",
+    "@google/genai": "^2.24.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@tailwindcss/vite": "^4.1.14",
     "@types/d3": "^7.4.3",
