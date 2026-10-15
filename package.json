@@ -14,7 +14,7 @@
     "test:e2e": "tsx tests/automation/ui-smoke.ts"
   },
   "dependencies": {
-    "@google-cloud/bigquery": "^8.3.1",
+    "@google-cloud/bigquery": "^9.2.0",
     "@google/genai": "^2.24.0",
     "@modelcontextprotocol/sdk": "^1.32.1",
     "@tailwindcss/vite": "^4.1.14",
