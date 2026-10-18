@@ -908,7 +908,7 @@ git push origin feature/your-feature-name
 - ✅ Ensure all tests pass before submitting PR
 - ✅ Be respectful and constructive in discussions
 
-For more details, see [`CONTRIBUTING.md`](CONTRIBUTING.md) (coming soon).
+For more details, see [`CONTRIBUTING.md`](CONTRIBUTING.md) .
 
 ---
 
