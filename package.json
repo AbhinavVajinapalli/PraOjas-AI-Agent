@@ -32,7 +32,7 @@
     "html2canvas": "^1.4.1",
     "jimp": "^1.6.1",
     "jspdf": "^4.2.1",
-    "jspdf-autotable": "^5.0.8",
+    "jspdf-autotable": "^5.0.9",
     "lucide-react": "^1.46.0",
     "motion": "^12.23.24",
     "multer": "^2.4.0",
