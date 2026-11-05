@@ -7,5 +7,5 @@ alembic==1.20.0
 psycopg2-binary==2.9.9
 python-jose[cryptography]==3.4.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.31
+python-multipart==0.0.33
 google-genai==2.31.0
