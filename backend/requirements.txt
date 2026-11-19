@@ -2,7 +2,7 @@ fastapi==0.162.2
 uvicorn==0.54.0
 sqlalchemy==2.1.8
 pydantic==2.5.2
-pydantic-settings==2.16.0
+pydantic-settings==2.16.3
 alembic==1.20.0
 psycopg2-binary==2.9.9
 python-jose[cryptography]==3.4.0
